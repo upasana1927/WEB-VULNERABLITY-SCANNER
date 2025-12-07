@@ -14,8 +14,11 @@ Dynamic input fields for single scan
 
 ⚡ Installation
 git clone https://github.com/upasana1927/WEB-VULNERABLITY-SCANNER-.git
+
 cd WEB-VULNERABLITY-SCANNER-
+
 pip install -r requirements.txt
+
 python app.py
 
 
