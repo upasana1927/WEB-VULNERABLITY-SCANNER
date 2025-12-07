@@ -13,6 +13,7 @@ Scan results displayed inside a transparent box
 Dynamic input fields for single scan
 
 ⚡ Installation
+
 git clone https://github.com/upasana1927/WEB-VULNERABLITY-SCANNER-.git
 
 cd WEB-VULNERABLITY-SCANNER-
@@ -25,7 +26,11 @@ python app.py
 Open http://127.0.0.1:5000 in your browser.
 
 📁 Structure
+
 templates/   # HTML pages
-static/      # Images, CSS
+
+static/      # Images
+
 app.py       # Flask app
+
 requirements.txt
