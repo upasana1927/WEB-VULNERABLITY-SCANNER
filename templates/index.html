@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="scanner-wrapper">
+  <div class="scanner-box">
+    <!-- Left Side -->
+    <div class="scanner-left">
+      <h1>Web Vulnerability Scanner</h1>
+      <p>Welcome to the Cyber Security Web Vulnerability Scanner. </p>
+    </div>
+
+    <!-- Right Side (Image) -->
+    <div class="scanner-right">
+   <img src="{{ url_for('static', filename='a.png') }}" alt="Scanner Image">
+
+    </div>
+  </div>
+
+  {% if results %}
+    {% include 'scan_results.html' %}
+  {% endif %}
+</div>
+
+<style>
+/* Remove parent container background if this block is inside it */
+.container {
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Center the transparent box vertically */
+.scanner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 40px 20px; /* optional padding around */
+}
+
+/* Transparent box */
+.scanner-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+}
+
+/* Left side content */
+.scanner-left {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.scanner-left h1 {
+  font-size: 42px;
+  color: #073b3a;
+  margin-bottom: 20px;
+}
+
+.scanner-left p {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Right side image */
+.scanner-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanner-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+</style>
+{% endblock %}

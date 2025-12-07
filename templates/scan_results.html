@@ -1,0 +1,29 @@
+{% if results %}
+<h2>🛡 Scan Results:</h2>
+
+<table>
+  <tr>
+    <th>URL</th>
+    <th>SQL Injection</th>
+    <th>XSS</th>
+    <th>Headers</th>
+    <th>CSRF</th>
+    <th>DOM XSS</th>
+  </tr>
+
+  {% for r in results %}
+  <tr>
+    <td>{{ r.url }}</td>
+    <td><span class="{{ 'badge-vuln' if r.sql_injection else 'badge-safe' }}">{{ 'Vulnerable' if r.sql_injection else 'Safe' }}</span></td>
+    <td><span class="{{ 'badge-vuln' if r.xss else 'badge-safe' }}">{{ 'Vulnerable' if r.xss else 'Safe' }}</span></td>
+    <td>{{ r.headers }}</td>
+    <td><span class="{{ 'badge-vuln' if r.csrf else 'badge-safe' }}">{{ 'Vulnerable' if r.csrf else 'Safe' }}</span></td>
+    <td><span class="{{ 'badge-vuln' if r.dom_xss else 'badge-safe' }}">{{ 'Vulnerable' if r.dom_xss else 'Safe' }}</span></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br>
+<br>
+<a href="/download" class="btn">⬇ Download Scan Report</a>
+{% endif %}

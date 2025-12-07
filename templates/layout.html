@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ title or "Web Vulnerability Scanner" }}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#dff5ec;}
+    nav{background:#073b3a; padding:18px 25px; display:flex; justify-content:center; gap:35px;
+        position:sticky; top:0; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,.2);}
+    nav a{color:white; text-decoration:none; font-size:19px; font-weight:500; transition:.3s;}
+    nav a:hover{color:#aafcdc; transform:scale(1.07);}
+    .container{max-width:1100px; margin:40px auto; background:white; padding:40px;
+        border-radius:18px; box-shadow:0 8px 28px rgba(0,0,0,.2); animation:fade 0.6s;}
+    @keyframes fade{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);}}
+    h2{color:#073b3a; font-size:28px; font-weight:600; margin-bottom:20px;}
+    input, textarea{width:100%; padding:14px; border:2px solid #c7e6dc; border-radius:10px; font-size:16px; outline:none;}
+    input:focus, textarea:focus{border-color:#087e6e;}
+    .btn{background:#087e6e; color:white; padding:12px 26px; border:none; border-radius:12px;
+         font-size:17px; cursor:pointer; transition:.3s; margin-top:10px;}
+    .btn:hover{background:#0d5a50; transform:scale(1.05);}
+    .input-group{display:flex; gap:10px; margin-top:10px;}
+    .remove-btn{background:#d62828;}
+    .remove-btn:hover{background:#a31010;}
+    table{width:100%; border-collapse:collapse; margin-top:25px; font-size:15px;}
+    th,td{padding:13px; border:1px solid #d8e9e3; text-align:center;}
+    th{background:#073b3a; color:white;}
+    .badge-safe{color:white; background:#1aa149; padding:6px 12px; border-radius:8px;}
+    .badge-vuln{color:white; background:#d62828; padding:6px 12px; border-radius:8px;}
+
+    /* 🔥 Loading Animation */
+    #loaderOverlay{
+      display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,.6); backdrop-filter:blur(4px);
+      justify-content:center; align-items:center; z-index:999;
+    }
+    .loader{
+      border:7px solid #eaf8f3;
+      border-top:7px solid #087e6e;
+      border-radius:50%; width:90px; height:90px;
+      animation:spin 1s linear infinite;
+    }
+    .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 50px;
+    background: #003f3f;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    height: 34px;
+    width: 34px;
+    border-radius: 6px;
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f3f3f1ff;
+    letter-spacing: .5px;
+}
+
+.nav-right {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+
+.nav-right a {
+    color: #80d7a5ff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+.nav-right a:hover {
+    color: #a5f7e1;
+    text-shadow: 0 0 8px rgba(165,247,225,.8);
+}
+.logo-emoji {
+    font-size: 55px;           /* size bada */
+    font-weight: bold;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    filter: drop-shadow(0 0 6px rgba(0,255,200,0.65));
+    transition: transform 0.3s ease;
+}
+
+.logo-emoji:hover {
+    transform: scale(1.14);
+}
+.brand {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.nav-right li {
+    position: relative;
+}
+
+.nav-right a.active-page {
+    padding: 8px 22px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50px;   /* OVAL / PILL SHAPE */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+}
+
+
+    @keyframes spin{to{transform:rotate(360deg);}}
+  </style>
+
+  <script>
+    function showLoader(){ document.getElementById("loaderOverlay").style.display = "flex"; }
+  </script>
+
+</head>
+<body>
+  <div id="loaderOverlay"><div class="loader"></div></div>
+
+  <nav class="navbar">
+  <div class="nav-left">
+    <span class="logo-emoji">🛡</span>
+    <span class="brand">Web Scanner</span>
+  </div>
+
+  <ul class="nav-right">
+     <li><a href="/" 
+        class="{% if request.path == '/' %}active-page{% endif %}">
+        Home
+    </a></li>
+
+    <li><a href="/insert"
+        class="{% if '/insert' in request.path %}active-page{% endif %}">
+        Single Scan
+    </a></li>
+
+    <li><a href="/bulk"
+        class="{% if '/bulk' in request.path %}active-page{% endif %}">
+        Batch Scan
+    </a></li>
+  </ul>
+</nav>
+
+
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

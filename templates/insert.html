@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="scanner-wrapper">
+  <div class="scanner-box">
+
+    <h2>Single Scan (Add one or more)</h2>
+
+    <form method="POST" action="/insert" onsubmit="showLoader()">
+      <div id="url-fields">
+        <div class="input-group">
+          <input type="text" name="urls" placeholder="Enter URL (e.g., http://example.com)" required>
+          <button type="button" class="btn remove-btn" onclick="removeInput(this)">Remove</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn" onclick="addUrlInput()">+ Add URL</button>
+      <br><br>
+      <button type="submit" class="btn">Start Scan</button>
+    </form>
+
+  </div>
+</div>
+
+{% if results %}
+<div class="results-box">
+  {% include 'scan_results.html' %}
+</div>
+{% endif %}
+
+<script>
+function addUrlInput(){
+  const div = document.createElement("div");
+  div.classList.add("input-group");
+  div.innerHTML = `
+    <input type="text" name="urls" placeholder="Enter URL" required>
+    <button type="button" class="btn remove-btn" onclick="removeInput(this)">Remove</button>`;
+  document.getElementById("url-fields").appendChild(div);
+}
+function removeInput(btn){ btn.parentElement.remove(); }
+</script>
+
+<style>
+/* Background remove */
+.container {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.results-box {
+  width: 100%;
+  padding: 20px;
+  border: 6px solid #073b3a;      /* box border */
+  border-radius: 10px;         /* round corner */
+  background-color: #ffff;
+  margin-top: 20px;
+}
+/* Wrapper for centering */
+.scanner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 40px 20px;
+}
+
+/* Transparent Glass Box */
+.scanner-box {
+  width: 100%;
+  max-width: 750px;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 45px;
+  border-radius: 18px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.25);
+}
+
+/* Heading */
+.scanner-box h2 {
+  font-size: 32px;
+  margin-bottom: 22px;
+  color: #073b3a;
+  text-align: center;
+}
+
+/* Input fields group */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  font-size: 16px;
+}
+
+/* Buttons */
+.btn {
+  background-color: #073b3a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: .3s;
+}
+
+.btn:hover {
+  background-color: #05504d;
+}
+
+/* Remove button small */
+.remove-btn {
+  background-color: #b02a2a;
+  padding: 12px 18px;
+}
+
+.remove-btn:hover {
+  background-color: #8a1f1f;
+}
+</style>
+
+{% endblock %}

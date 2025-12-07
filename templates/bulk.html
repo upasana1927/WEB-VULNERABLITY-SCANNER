@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="scanner-wrapper">
+  <div class="scanner-box">
+
+    <h2>Batch Scan (one URL per line)</h2>
+
+    <form method="POST" action="/bulk" onsubmit="showLoader()">
+      <textarea name="urls_bulk" placeholder="http://site1.com&#10;http://site2.com" required></textarea>
+      <button type="submit" class="btn">Start Scan</button>
+    </form>
+
+  </div>
+</div>
+
+{% if results %}
+<div class="results-box">
+  {% include 'scan_results.html' %}
+</div>
+{% endif %}
+
+
+<style>
+/* Remove default layout background */
+.container {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.results-box {
+  width: 100%;
+  padding: 20px;
+  border: 6px solid #073b3a;      /* box border */
+  border-radius: 10px;         /* round corner */
+  background-color: #ffff;
+  margin-top: 20px;
+}
+
+/* Centering wrapper */
+.scanner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 40px 20px;
+}
+
+/* Glass Transparent Box */
+.scanner-box {
+  width: 100%;
+  max-width: 750px;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 45px;
+  border-radius: 18px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.25);
+}
+
+/* Heading */
+.scanner-box h2 {
+  font-size: 32px;
+  margin-bottom: 22px;
+  color: #073b3a;
+  text-align: center;
+}
+
+/* Textarea style */
+textarea {
+  width: 100%;
+  height: 200px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  font-size: 16px;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+/* Button */
+.btn {
+  background-color: #073b3a;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+  transition: .3s;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #05504d;
+}
+</style>
+
+{% endblock %}
